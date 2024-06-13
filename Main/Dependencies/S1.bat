@@ -1,0 +1,2 @@
+%~dp0\S1.exe /SITE_TOKEN=TOKENGOESHERE /SILENT
+pause
