@@ -100,7 +100,7 @@
             } elseif ($SubFunction -eq "Start") {
             #Initiates the Bitlocker Encryption of the Device
                 function BitlockerTwo{
-                    Write-Host "Attempting Bitlocker2, this will prompt you for a pin "4357""
+                    Write-Host "Attempting Bitlocker2, this will prompt you for a pin " 1234""
                         Start-Sleep 1
                         $Pin = ConvertTo-SecureString "4357" -AsPlainText -Force
                             Enable-BitLocker -MountPoint "C:" -UsedSpaceOnly -SkipHardwareTest -Pin $Pin -AdAccountOrGroupProtector
