@@ -1,6 +1,6 @@
 #DesksideSupportPS
     #10/12/22
-    #HA Deskside Support
+    #[COMPANY] Deskside Support
     #Bruh
         #Use the DCU finder function to look for teams agnostic of current user
 
@@ -165,7 +165,7 @@
                     Write-Host "New: "
                         Write-Host $SerialName
                         Write-Host $env:computername
-                    Add-Computer -DomainName "cho.ha.local" -Credential $Creds -Force -Options JoinWithNewName,accountcreate
+                    Add-Computer -DomainName "[DOMAIN]" -Credential $Creds -Force -Options JoinWithNewName,accountcreate
                         Write-Host "Added to Domain."
                             Start-Sleep 2
                 }
@@ -249,7 +249,7 @@
             function RoutineClearMain {
                 $ErrorActionPreference='silentlycontinue'
                 $path = 'C:\Users'
-                $excluded = 'haitadmin','Public','Onward','Administrator'
+                $excluded = '[ADMIN_USER]','Public','[OTHER_USER]','Administrator'
                     Get-ChildItem $path -Exclude $excluded -Include *.* -Recurse -Force | ForEach-Object  { $_.Delete()}
                     Get-ChildItem $path -Exclude $excluded -Force | ForEach-Object   { $_.Delete()}
                     Get-ChildItem $path
@@ -292,7 +292,7 @@
 
     #Assigns a csv list of service tags to the HA Laptops OU (Needs to be changed to be a modular OU)
         function ADOUChangeMain{
-            $Where = Read-Host "Please Enter OU Path: (HA, HAI, HH, HHCS, HHO)"
+            $Where = Read-Host "Please Enter OU Path: ([OU1], [OU2], [OU3], [OU4], [OU5])"
             $What = Read-Host "Please Enter Device List Type: (Laptops, Desktops)"
             $How = Read-Host "Excel (E) or Plaintext (T)"
             $filety = 'Comma Seperated Values (*.csv)|*.csv'
@@ -302,14 +302,14 @@
                                 $Devices = Get-Content $File
                                     foreach ($laptop in $Devices) {
                                         $obj = Get-ADComputer $laptop
-                                        Get-ADComputer $obj | Move-ADObject -TargetPath "OU=$What,OU=$Where,OU=Heartland Alliance,OU=Systems,DC=cho,DC=ha,DC=local" -Verbose
+                                        Get-ADComputer $obj | Move-ADObject -TargetPath "OU=$What,OU=$Where,OU=[COMPANY],OU=[DEPARTMENT],DC=[DOMAIN_PART1],DC=[DOMAIN_PART2],DC=[DOMAIN_PART3]" -Verbose
                                     }
-                        } elseif ($How -eq "T") {
+                                    } elseif ($How -eq "T") {
                             $Devices = Read-Host "Input Device Service Tags"
                                 $Devices = $Devices.split(",")
                                     foreach ($laptop in $Devices) {
                                         $obj = Get-ADComputer $laptop
-                                        Get-ADComputer $obj | Move-ADObject -TargetPath "OU=$What,OU=$Where,OU=Heartland Alliance,OU=Systems,DC=cho,DC=ha,DC=local" -Verbose
+                                        Get-ADComputer $obj | Move-ADObject -TargetPath "OU=$What,OU=$Where,OU=[COMPANY],OU=[DEPARTMENT],DC=[DOMAIN_PART1],DC=[DOMAIN_PART2],DC=[DOMAIN_PART3]" -Verbose
                                     }
                         } else {
                             Write-Host "Wrong Input."
@@ -380,9 +380,9 @@
         function CheckListHA {
             ApplicationFinders "Main" "Office",
                 "Sentinel Agent",
-                "Office@Hand",
-                "Citrix",
-                "Forticlient",
+                "[VOIP_SOFTWARE]",
+                "[REMOTE_ACCESS_SOFTWARE]",
+                "[VPN_SOFTWARE]",
                 "DisplayLink",
                 "Chrome"
             ApplicationFinders "Sub" "$env:WINDIR\LTSvc\",
