@@ -82,13 +82,3 @@ To hash and store the tokens:
    ```
 3. The script will hash the tokens using the SHA-256 algorithm and store the hashed values in the respective files within the `Dependencies\Hashes_Tokens` directory.
 4. Delete the plaintext tokens from the `HashTokens.ps1` script and ensure they are not stored anywhere else.
-
-## Contributing
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Acknowledgments
-- Thanks to all contributors and community members for their support.
-- Hat tip to anyone whose code was used.
