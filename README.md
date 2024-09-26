@@ -1,38 +1,34 @@
-
 # Deskside Support PowerShell Toolkit
 
 ## Overview
-This repository contains a collection of PowerShell scripts and batch files designed to automate and streamline deskside support tasks. The toolkit is intended for IT professionals managing Windows environments and includes scripts for application installation, system configuration, and other common support activities.
+This repository contains a collection of PowerShell scripts designed to automate and streamline deskside support tasks. The toolkit is intended for IT professionals managing Windows environments and includes scripts for application installation, system configuration, and other common support activities.
 
 ## Features
-- **RunThisAdmin.bat**: A batch file to run DISM commands, import power schemes, and execute the main PowerShell script.
 - **Main.ps1**: The primary PowerShell script that performs a series of system management tasks.
-- **Adobe Update (Acrobat.bat)**: Batch script for updating Adobe Acrobat.
-- **Agent.msi**: Installer for a support agent.
-- **CustomFileAssoc.xml**: XML file for custom file associations.
-- **DCU.bat & DCU.exe**: Scripts and executables for Dell Command Update.
-- **S1.bat & S1.exe**: Batch and executable files for a specific task (details not provided).
-- **S1Token.txt**: A token file associated with S1 scripts.
-- **scheme.pow**: Power scheme configuration file.
+- **HashTokens.ps1**: A separate script to hash and store sensitive tokens securely.
+- Modular and organized script structure for easy maintenance and updates.
+- Integration of batch file functionality into the main PowerShell script.
+- Enhanced security measures for handling sensitive tokens and information.
+- Improved error handling and informative output messages.
+- Consistent naming conventions and code formatting for better readability.
 
 ## Directory Structure
 ```
 .
 ├── Dependencies
-│   ├── CustomFileAssoc.xml
-│   ├── Main.ps1
-│   └── scheme.pow
-├── Testing
-│   └── (Testing-related files)
-├── RunThisAdmin.bat
-├── Acrobat.bat
-├── Agent.msi
-├── DCU.bat
-├── DCU.exe
-├── S1.bat
-├── S1.exe
-├── S1Token.txt
-└── scheme.pow
+│   ├── Configurations
+│   │   └── CustomFileAssoc.xml
+│   ├── Executables
+│   │   ├── Agent.msi
+│   │   ├── DCU.exe
+│   │   └── S1.exe
+│   ├── Hashes_Tokens
+│   │   ├── acrobat_serial.txt
+│   │   └── s1token.txt
+│   └── Scripts
+│       ├── HashTokens.ps1
+│       └── Main.ps1
+└── README.md
 ```
 
 ## Getting Started
@@ -45,64 +41,50 @@ Follow these instructions to get the project up and running on your local machin
 
 ### Installation
 1. **Clone the repository:**
-    ```bash
-    git clone https://github.com/phpwun/DesksideSupportPS.git
-    ```
-2. **Navigate to the script directory:**
-    ```bash
-    cd DesksideSupportPS
-    ```
-3. **Run the setup script with administrative privileges:**
-    ```bash
-    .\RunThisAdmin.bat
-    ```
+   ```bash
+   git clone https://github.com/yourusername/DesksideSupportPS.git
+   ```
 
-### RunThisAdmin.bat
-This batch file performs the following actions:
-- Imports default app associations using DISM.
-    ```bash
-    Dism.exe /online /import-defaultappassociations:%~dp0Dependencies\CustomFileAssoc.xml
-    ```
-- Imports a power scheme configuration.
-    ```bash
-    powercfg /import %~dp0Dependencies\scheme.pow
-    ```
-- Executes the main PowerShell script.
-    ```bash
-    powershell -ep Bypass %~dp0Dependencies\Main.ps1
-    ```
-- Pauses the command prompt to review any output or errors.
-    ```bash
-    pause
-    ```
+2. **Navigate to the script directory:**
+   ```bash
+   cd DesksideSupportPS
+   ```
+
+3. **Run the HashTokens.ps1 script to hash and store sensitive tokens:**
+   ```powershell
+   .\Dependencies\Scripts\HashTokens.ps1
+   ```
+
+   Make sure to update the script with your actual token values before running it.
+
+4. **Execute the main PowerShell script with administrative privileges:**
+   ```powershell
+   .\Dependencies\Scripts\Main.ps1
+   ```
 
 ## Usage
 ### Main.ps1
-The primary PowerShell script included in the Dependencies folder. The script performs various system management tasks.
+The primary PowerShell script included in the `Dependencies\Scripts` directory. The script performs various system management tasks and provides a menu-driven interface for executing different deskside support tasks.
 
 To execute the script individually:
 ```powershell
-.\Dependencies\Main.ps1
+.\Dependencies\Scripts\Main.ps1
 ```
 
-### Other Scripts
-- **Acrobat.bat**: Run this script to update Adobe Acrobat.
-    ```bash
-    .\Acrobat.bat
-    ```
-- **DCU.bat**: Execute this script to perform updates using Dell Command Update.
-    ```bash
-    .\DCU.bat
-    ```
+### HashTokens.ps1
+A separate PowerShell script located in the `Dependencies\Scripts` directory. This script is responsible for hashing sensitive tokens and storing them securely in the `Dependencies\Hashes_Tokens` directory.
+
+To hash and store the tokens:
+1. Open the `HashTokens.ps1` script and replace the placeholder token values with your actual tokens.
+2. Run the script:
+   ```powershell
+   .\Dependencies\Scripts\HashTokens.ps1
+   ```
+3. The script will hash the tokens using the SHA-256 algorithm and store the hashed values in the respective files within the `Dependencies\Hashes_Tokens` directory.
+4. Delete the plaintext tokens from the `HashTokens.ps1` script and ensure they are not stored anywhere else.
 
 ## Contributing
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/phpwun/DesksideSupportPS/tags).
-
-## Authors
-- **phpwun** - *Initial work* - [GitHub Profile](https://github.com/phpwun)
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
